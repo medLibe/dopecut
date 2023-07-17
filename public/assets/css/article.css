@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Amaranth&family=Luckiest+Guy&family=Merriweather+Sans:wght@300&display=swap');
+
+body{
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+.row-content{
+    font-family: sans-serif;
+}
+
+#topNav{
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+.brand-image{
+    width: 40px;
+    height: 40px;
+    border: 0.1rem #e4e3e3 solid;
+    border-radius: 40px;
+}
+
+.nav-link::after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: #f0f2f5;
+    transition: width .3s ease;
+}
+
+.nav-link:hover:after{
+    width: 100%;
+}
+
+.navCarousel{
+    /* position: absolute; */
+    font-weight: 600;
+    z-index: 10;
+    width: 100%;
+}
+
+.bg-dark-matte{
+    background-color: #0a0909;
+}
+
+.card-article{
+    border-radius: 1px;
+}
+
+.divider-content{
+    margin-bottom: 10px;
+    border-bottom: 3px solid #1c3463;
+}
+
+.divider-recommendation{
+    margin-bottom: 10px;
+    border-bottom: 3px solid #1c3463;
+    width: 50%;
+}
+
+.recommendation{
+    display: grid;
+}
+
+img{
+    max-width: 100%;
+}
+
+.img-headline{
+    width: 40%;
+}
+
+#jumbotron-about{
+    background-color: #0a0909;
+}
+
+.btn-like{
+    padding: 3px 18px 3px 18px;
+    border: 0.5px grey solid;
+    color: grey;
+    background-color: white;
+    font-size: 11pt;
+    text-align: left;
+}
+
+.btn-like:hover{
+    padding: 3px 18px 3px 18px;
+    background-color:#bf2c2c;
+    color: white;
+    font-size: 11pt;
+    text-align: left;
+    border: 0.5px #bf2c2c solid;
+}
+
+.btn-like:active{
+    padding: 3px 18px 3px 18px;
+    background-color:#ad2121;
+    color: white;
+    font-size: 11pt;
+    text-align: left;
+    border: 0.5px #bf2c2c solid;
+}
+
+.btn-like:focus{
+    padding: 3px 18px 3px 18px;
+    background-color:#ad2121;
+    color: white;
+    font-size: 11pt;
+    text-align: left;
+    border: 0.5px #bf2c2c solid;
+}
+
+.btn-liked{
+    padding: 3px 18px 3px 18px;
+    background-color:#ad2121;
+    color: white;
+    font-size: 11pt;
+    text-align: left;
+    border: 0.5px #bf2c2c solid;
+}
+
+.btn-share{
+    border: none;
+    background-color: transparent;
+    color: gray;
+    font-size: 12pt;
+    margin: 5px 5px 0;
+}
+
+.btn-facebook:hover{
+    color: #1877F2;
+}
+
+.btn-whatsapp:hover{
+    color: #25D366;
+}
+
+.btn-twitter:hover{
+    color: #1DA1F2;
+}
+
+.btn-instagram:hover{
+    color: #E4405F;
+}
+
+.article-list-card{
+    border-radius: 1px;
+    border: 0.5px #dddcdc solid;
+    box-shadow: 3px 5px 5px #0a090914;
+    transition: transform 0.3s;
+}
+
+.article-list-card:hover{
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+.article-list-image{
+    padding: 10px 10px 10px 10px;
+}
+
+.image-left-list .img-headline{
+    width: 100%;
+}
+
+.content-headline{
+    font-size: 10pt;
+}
+
+.paginated{
+    padding-top: 10rem;
+    display: inline-block;
+}
+
+.paginated a{
+    color: black;
+    text-decoration: none;
+    float: left;
+    padding: 8px 16px;
+}
+
+.paginated a.active{
+    background-color: #0a0909;
+    color: white;
+}
+
+.paginated a:hover:not(.ative) {
+    background-color: #b0aeae;
+}
+
+.head-list{
+    padding: 4px 12px 4px 12px;
+    background-color: #3588b9;
+    color: white;
+}
+@media screen and (max-width: 576px){
+    /* .brand-image{
+        display: none;
+    } */
+
+    .row-content{
+        margin-left: 1px !important;
+    }
+}
