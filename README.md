@@ -11,3 +11,6 @@ Here some requirements for this project:
 
 ## Introduction
 Dopecut Hair Studio is a web-based company profile made by Laravel 8, JQuery / Javascript, and Bootstrap 5 & CSS. It allow customers to book their appoinment with Hair Artist, also allow admin to check customers booking.
+
+## Quick Start
+First, after you pull this repoistory, you need to create a database named ``` dopestudio ```. Then you need to run these two commands: ``` php artisan migrate ``` and ``` php artisan serve ```
