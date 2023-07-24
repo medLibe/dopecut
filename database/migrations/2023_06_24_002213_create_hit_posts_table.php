@@ -15,7 +15,8 @@ class CreateHitPostsTable extends Migration
     {
         Schema::create('hit_posts', function (Blueprint $table) {
             $table->id();
-            $table->string('article_post_id');
+            $table->foreignId('article_post_id');
+            $table->string('ip_address');
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by');
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

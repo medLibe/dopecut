@@ -53,7 +53,7 @@
                         @endif
                     </li>
                     <li class="nav-item navItem mx-auto">
-                        <a class="nav-link active" href="#SecondSection">BLOG</a>
+                        <a class="nav-link active" href="/article">BLOG</a>
                     </li>
                 </ul>
             </div>

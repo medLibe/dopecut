@@ -11,6 +11,7 @@ class HitPost extends Model
 
     protected $fillable = [
         'article_post_id',
+        'ip_address',
         'created_by',
         'updated_by',
         'is_active',

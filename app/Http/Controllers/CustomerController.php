@@ -368,7 +368,7 @@ class CustomerController extends Controller
 
     public function article()
     {
-        $getArticle = $this->article_post->where('is_active', 1)->get();
+        $getArticle = $this->article_post->getAllArticle();
 
         return view('customer.article_list', [
             'page'      => "Dopecut's Blog",
@@ -389,19 +389,21 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function hitArticle($slug)
+    public function hitArticle(Request $request, $slug)
     {
         $getArticle = $this->article_post->where('slug', $slug)->first();
 
         if(Auth::user() === null){
             $this->hit_post->create([
                 'article_post_id'   => $getArticle->id,
+                'ip_address'        => $request->ip(),
                 'created_by'        => 'Guest',
                 'updated_by'        => 'Guest',
             ]);
         }else{
             $this->hit_post->create([
                 'article_post_id'   => $getArticle->id,
+                'ip_address'        => $request->ip(),
                 'created_by'        => Auth::user()->name,
                 'updated_by'        => Auth::user()->name,
             ]);
@@ -417,6 +419,7 @@ class CustomerController extends Controller
         $like = $request->like + 1;
         $this->like_post->create([
             'article_post_id'  => $request->article_id,
+            'ip_address'       => $request->ip(),
             'user_id'          => Auth::user() == null ? null : Auth::user()->name,
             'created_by'       => Auth::user() == null ? 'Guest' : Auth::user()->name,
             'updated_by'       => Auth::user() == null ? 'Guest' : Auth::user()->name,

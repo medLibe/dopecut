@@ -12,6 +12,7 @@ class LikePost extends Model
     protected $fillable = [
         'user_id',
         'article_post_id',
+        'ip_address',
         'created_by',
         'updated_by',
         'is_active',

@@ -24,7 +24,9 @@ class ArticlePost extends Model
 
     function getAllArticle()
     {
-        $data = DB::table("article_posts")->where('is_active', 1)->get();
+        $data = DB::table("article_posts")->where('is_active', 1)
+                  ->orderBy('created_at', 'DESC')
+                  ->get();
 
         return $data;
     }
@@ -45,6 +47,7 @@ class ArticlePost extends Model
                                           ->where('is_active', 1)
                                           ->inRandomOrder()
                                           ->limit(5)
+                                          ->orderBy('created_at', 'DESC')
                                           ->get();
 
         return $data;

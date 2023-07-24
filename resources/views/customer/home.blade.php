@@ -162,13 +162,13 @@
 
         <!-- Section 5 -->
         {{-- Google Place ID : ChIJuQ6sGhj3aS4RTDlw-5aX3Nc --}}
-        <div class="row" id="Reviews">
+        {{-- <div class="row" id="Reviews">
             <div class="p-5" id="jumbotron-review">
                 <h1 class="text-center mb-5"><strong>REVIEWS</strong></h1>
                 <div class="row justify-content-center text-center" id="google-review">
                 </div>
             </div>
-        </div>
+        </div> --}}
     </main>
 
     <footer class="container-fluid">
@@ -284,21 +284,6 @@
 
     <script>
         $(document).ready(function() {
-
-            $(function() {
-                $.ajax({
-                    url: 'https://mybusiness.googleapis.com/v4/locations/ChIJuQ6sGhj3aS4RTDlw-5aX3Nc/reviews',
-                    type: 'GET',
-                    dataType: 'JSON',
-                    cache: false,
-                    success: function(response){
-                        console.log(response);
-                    },
-                    error: function(xhr, error, status){
-                        console.error(error);
-                    }
-                });
-            });
 
             $(window).scroll(function() {
                 var height = $('#topNav').height();

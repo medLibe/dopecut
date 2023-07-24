@@ -74,9 +74,8 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title fw-bold"><a class="text-dark"
-                                                href="/article/{{ $a->slug }}"
-                                                style="text-decoration: none;">{{ $a->title }}</a></h5>
+                                        <h5 class="card-title fw-bold"><a class="text-dark hit-link" id="{{ $a->slug }}"
+                                            style="text-decoration: none;">{{ $a->title }}</a></h5>
                                         <p class="card-text content-headline">{{ $a->content_headline }}</p>
                                         <p class="text-muted" style="font-size: 10pt;">oleh {{ $a->author }} -
                                             {{ date('d F Y', strtotime($a->created_at)) }}</p>
@@ -154,46 +153,6 @@
                     },
                     success: function(response) {
                         window.location.href = response.redirect;
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error: ', error);
-                    }
-                });
-            });
-
-            $('.btn-like').on('click', function() {
-                const like = parseInt($('#like-counter').text());
-                const article_id = $('#article_id').val();
-                const _token = '{{ csrf_token() }}';
-                const likeButton = $(this);
-
-                if (localStorage.getItem('liked_' + article_id)) {
-                    return;
-                }
-
-                $.ajax({
-                    url: '/article/like/' + article_id,
-                    method: 'POST',
-                    cache: false,
-                    dataType: 'JSON',
-                    data: {
-                        like: like,
-                        article_id: article_id,
-                        _token: _token,
-                    },
-                    success: function(response) {
-                        if (response.success == true) {
-                            likeButton.removeClass('btn-like').addClass('btn-liked');
-
-                            // update like counter
-                            $('#like-counter').text(response.like);
-
-                            // disable like button after change class to liked
-                            likeButton.prop('disabled', true);
-
-                            // save to localstorage
-                            localStorage.setItem('liked_' + article_id, true);
-                        }
                     },
                     error: function(xhr, status, error) {
                         console.error('Error: ', error);

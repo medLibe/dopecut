@@ -16,7 +16,8 @@ class CreateLikePostsTable extends Migration
         Schema::create('like_posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable();
-            $table->string('article_post_id');
+            $table->foreignId('article_post_id');
+            $table->string('ip_address');
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by');
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
