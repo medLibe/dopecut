@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Dopecut Hair Studio didirikan pada tahun 2023 untuk melayani hair service untuk pria.">
+        content="Dopecut Hair Studio di Cideng, Gambir, Jakarta Pusat yang didirikan pada tahun 2023, kami berkomitmen untuk melakukan berbagai jenis pelayanan rambut terbaik untuk pria dan wanita.">
     <meta name="keywords"
         content="dopecut, dopecuthairstudio, hair studio, barberman, hair artist, potong rambut pria, potong rambut, potong rambut tanah abang, tanah abang, jakarta, jakarta pusat">
     <meta name="google-site-verification" content="YOEppHJk69BMbN_ZApfcfeDOcN0wCBvcih-kOCFdSSU" />
