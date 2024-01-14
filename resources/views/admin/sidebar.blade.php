@@ -95,6 +95,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="/admin/membership" class="nav-link {{ $page == 'Membership' ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-medal"></i>
+                        <p>Membership</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="/admin/article" class="nav-link {{ $page == 'Article' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-newspaper"></i>
                         <p>Artikel</p>

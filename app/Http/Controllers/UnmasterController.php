@@ -7,9 +7,12 @@ use App\Models\BookTransaction;
 use App\Models\BookTransactionDetail;
 use App\Models\HairArtist;
 use App\Models\HairArtistSchedule;
+use App\Models\Membership;
+use App\Models\MembershipAbsent;
 use App\Models\Service;
 use App\Models\TimeOperation;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +32,8 @@ class UnmasterController extends Controller
     protected $hair_artist;
     protected $ha_schedule;
     protected $article_post;
+    protected $membership;
+    protected $membership_absent;
 
     function __construct()
     {
@@ -40,6 +45,8 @@ class UnmasterController extends Controller
         $this->hair_artist = new HairArtist();
         $this->ha_schedule = new HairArtistSchedule();
         $this->article_post = new ArticlePost();
+        $this->membership = new Membership();
+        $this->membership_absent = new MembershipAbsent();
     }
 
     public function index(Request $request)
@@ -507,5 +514,218 @@ class UnmasterController extends Controller
         ]);
 
         return redirect('/admin/article')->with('success', 'Artikel berhasil ditakedown');
+    }
+
+    /**
+     * Membership
+     */
+    public function membership()
+    {
+        $getMember = $this->membership->getMembership();
+        return view('admin.membership', [
+            'page'      => 'Membership',
+            'view_mode' => false,
+            'member'    => $getMember
+        ]);
+    }
+
+    public function fetchMembership()
+    {
+        try{
+            $getMember = $this->membership->getMembership();
+
+            return response()->json([
+                'success'   => true,
+                'data'      => $getMember,
+            ]);
+
+        }catch(Exception $err){
+            return response()->json([
+                'success'   => false,
+                'message'   => $err->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function getMembership(Request $request)
+    {
+        try{
+            if($request->ajax()){
+                $data = $this->membership->getMembership();
+
+                return DataTables::of($data)
+                                ->addColumn('start_date', function($row) {
+                                    $start_date = date('d-m-Y', strtotime($row->start_date));
+                                    return $start_date;
+                                })
+                                ->addColumn('end_date', function($row) {
+                                    $end_date = date('d-m-Y', strtotime($row->end_date));
+                                    return $end_date;
+                                })
+                                ->addColumn('status', function($row) {
+                                    if($row->is_active == 1){
+                                        $status = '<div class="badge badge-success">Aktif</div>';
+                                    }else{
+                                        $status = '<div class="badge badge-secondary">Tidak Aktif</div>';
+                                    }
+
+                                    return $status;
+                                })
+                                ->addColumn('action', function($row){
+                                    $actionBtn = '<div class="text-center"><a href="/admin/member/' . $row->id . '" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>';
+
+                                    return $actionBtn;
+                                })
+                                ->rawColumns(['start_date', 'end_date', 'status', 'action'])
+                                ->make(true);
+            }
+        }catch(Exception $err){
+            return response()->json([
+                'success'   => false,
+                'message'   => $err->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function existMember(Request $request)
+    {
+        try {
+            $getMember = $this->user->select('no_hp')->where('no_hp', $request->no_hp)->first();
+
+            return response()->json([
+                'success'       => true,
+                'is_available'  => $getMember,
+            ]);
+
+        } catch (Exception $err) {
+            return response()->json([
+                'success'   => false,
+                'message'   => $err->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    public function storeMembership(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'no_hp'         => 'required|numeric|unique:users',
+                'name'          => 'required',
+                'start_date'    => 'required|date',
+            ],
+            [
+                'no_hp.required'        => 'No. HP tidak boleh kosong.',
+                'no_hp.numeric'         => 'No. HP hanya boleh mengandung angka.',
+                'no_hp.unique'          => 'No. HP sudah terdaftar menjadi member, silahkan lakukan absen.',
+                'name.required'         => 'Nama tidak boleh kosong.',
+                'start_date.required'   => 'Tanggal awal member tidak boleh kosong.',
+                'start_date.date'       => 'Format tanggal tidak sesuai.',
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'success'   => false,
+                    'message'   => $validator->errors(),
+                ], 400);
+            }
+
+            $storeUser = $this->user->create([
+                'no_hp'         => $request->no_hp,
+                'name'          => $request->name,
+                'role_id'       => 2,
+                'created_by'    => Auth::user()->username,
+                'updated_by'    => Auth::user()->username,
+            ]);
+
+            $this->membership->create([
+                'user_id'       => $storeUser->id,
+                'start_date'    => $request->start_date,
+                'end_date'      => $request->end_date,
+                'duration'      => 365,
+                'created_by'    => Auth::user()->username,
+                'updated_by'    => Auth::user()->username,
+            ]);
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Member baru berhasil ditambahkan.',
+            ]);
+
+        } catch (Exception $err) {
+            return response()->json([
+                'success'   => false,
+                'message'   => $err->getMessage(),
+            ]);
+        }
+    }
+
+    public function getMembershipById($id)
+    {
+        return view('admin.membership', [
+            'page'      => 'Absen Membership',
+            'view_mode' => true,
+            'member_id' => $id,
+        ]);
+    }
+
+    public function getMembershipAbsentById(Request $request, $id)
+    {
+        try{
+            if($request->ajax()){
+                $data = $this->membership_absent->select('created_at')->where('membership_id', $id)->get();
+
+                return DataTables::of($data)
+                    ->addColumn('created_at', function ($row) {
+                        $created_at = date('d-m-Y H:i:s', strtotime($row->created_at));
+
+                        return $created_at;
+                    })
+                    ->rawColumns(['created_at'])
+                    ->make(true);
+            }
+        }catch(Exception $err){
+            return response()->json([
+                'success'   => false,
+                'message'   => $err->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    public function membershipAbsent(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'membership_id' => 'required',
+            ],
+            [
+                'membership_id.required'    => 'No. HP tidak boleh kosong.',
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'success'   => false,
+                    'message'   => $validator->errors(),
+                ], 400);
+            }
+
+            $this->membership_absent->create([
+                'membership_id' => $request->membership_id,
+                'created_by'    => Auth::user()->username,
+                'updated_by'    => Auth::user()->username,
+            ]);
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Member berhasil di absen.',
+            ]);
+
+        } catch (Exception $err) {
+            return response()->json([
+                'success'   => false,
+                'message'   => $err->getMessage(),
+            ]);
+        }
     }
 }

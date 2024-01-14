@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="/adminlte/plugins/toastr/toastr.min.css">
      <!-- summernote -->
     <link rel="stylesheet" href="/adminlte/plugins/summernote/summernote-bs4.min.css">
+      <!-- Select2 -->
+    <link rel="stylesheet" href="/adminlte/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
     <!-- jQuery -->
     <script src="/adminlte/plugins/jquery/jquery.min.js"></script>
@@ -63,6 +66,8 @@
     <script src="/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
     <!-- Summernote -->
     <script src="/adminlte/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- Select2 -->
+    <script src="/adminlte/plugins/select2/js/select2.full.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">

@@ -106,5 +106,15 @@ Route::group(['middleware' => ['loginAdminMiddleware:1']], function() {
         Route::post('/admin/ha-schedule/create', 'createHaSchedule');
         //  Route::get('/admin/ha-schedule/status/{id}', 'statusHaSchedule');
         //  Route::get('/admin/ha-schedule/check/{id}', 'checkHaSchedule');
+
+        // Customer Membership
+        Route::get('/admin/membership', 'membership');
+        Route::get('/admin/member', 'getMembership');
+        Route::get('/admin/member-fetch', 'fetchMembership');
+        Route::post('/admin/exist-member', 'existMember');
+        Route::post('/admin/member', 'storeMembership');
+        Route::get('/admin/member/{id}', 'getMembershipById');
+        Route::get('/admin/member-absent/{id}', 'getMembershipAbsentById');
+        Route::post('/admin/member-absent', 'membershipAbsent');
     });
 });

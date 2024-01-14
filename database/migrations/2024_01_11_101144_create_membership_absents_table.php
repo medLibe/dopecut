@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateMembershipAbsentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('membership_absents', function (Blueprint $table) {
             $table->id();
-            $table->string('google_id')->unique()->nullable();
-            $table->string('name')->nullable();
-            $table->string('username')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->string('no_hp')->unique()->nullable();
-            $table->string('password')->nullable();
-            $table->tinyInteger('role_id');
+            $table->foreignId('membership_id');
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by');
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
@@ -37,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('membership_absents');
     }
 }
